@@ -1,6 +1,15 @@
 # JWT User Authentication Passportjs
 JWT based user authentication using passportjs, passport-local, passport-jwt, mongodb, angular
 
+Be aware this is application comes from an old github repository.
+It needs to be updated, changed and upgraded :
+- to latest version of Angular
+- to latest version of Express
+- upgrade all necessary packages
+- add MySQL and MariaDB integration
+- needs forgot your password
+- etc...
+
 
 #### Express Server
 
