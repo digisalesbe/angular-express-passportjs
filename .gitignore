@@ -1,0 +1,3 @@
+server/node_modules
+angular/node_modules
+server/*.pem
