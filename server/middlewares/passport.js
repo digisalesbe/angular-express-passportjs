@@ -39,9 +39,9 @@ const localLoginStrategy = new LocalStrategy(localStrategyOptions, async (userna
     //TODO: validation for form inputs
     try{
         let user = await UserModel.findOne({username: username});
-        if(!user) return done(null, false, {message: "Username does not exists!"});
+        if(!user) return done(null, false, {message: "Username or password incorrect !"});
         const isValid = await bcrypt.compare(password, user.password);
-        if(!isValid) return done(null, false, {message: "Invalid password!"});
+        if(!isValid) return done(null, false, {message: "Username or password incorrect !"});
         user = user.toObject()
         delete user.password;
         return done(null, user);
@@ -66,7 +66,7 @@ const localSignupStrategy = new LocalStrategy(localStrategyOptions,async (userna
             return done(null, user);
         }
         else{
-            return done(null, false, {message: 'Username already exists!'})
+            return done(null, false, {message: 'Username already exists !'})
         }        
     }
     catch(err){

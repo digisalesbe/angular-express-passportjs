@@ -25,6 +25,6 @@ app.use('*', (req, res)=>{
     res.sendFile(path.resolve(__dirname, 'public/dist/browser/index.html'));
 });
 
-app.listen(3000, ()=>{
-    console.log('listening on port 3000');
+app.listen(4201, ()=>{
+    console.log('listening on port 4201');
 });
