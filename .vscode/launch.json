@@ -1,18 +1,34 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}\\angular\\src\\main.ts"
-        }   
-    ]
+  "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "Debug Full Stack",
+      "configurations": [ "Launch Angular", "Launch Backend" ],
+      "postDebugTask": "Stop Frontend"
+    }
+  ],
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Angular",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}/angular",
+      "preLaunchTask": "npm: start"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Backend",
+      "program": "${workspaceFolder}/server/app.js",
+      "cwd": "${workspaceFolder}/server",
+      "outFiles": ["${workspaceFolder}/server/**/*.js"],
+      "env": {
+        "PORT": "4201",
+        "NODE_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
 }

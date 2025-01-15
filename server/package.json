@@ -4,7 +4,7 @@
   "description": "JWT based user authentication using passportjs, passport-jwt, mongodb, angular",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "secrets": "node ./utils/genKeyPair.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

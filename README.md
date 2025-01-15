@@ -53,3 +53,9 @@ Register:
 
 PageNotFound:
 ![PageNotFound](./screenshot/Page%20Not%20Found.png)
+
+Install MongoDB locally
+Community version : https://www.mongodb.com/try/download/community
+
+Configure MongoDB
+Look in the ".env"-file in the "server" folder, use this exact url for your MongoDB configuration
