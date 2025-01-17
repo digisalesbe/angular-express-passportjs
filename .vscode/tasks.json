@@ -1,0 +1,63 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "npm: start",
+      "type": "npm",
+      "script": "start",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "source": "ts",
+        "applyTo": "closedDocuments",
+        "fileLocation": ["relative", "${workspaceFolder}/angular"],
+        "pattern": "$tsc",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "\\.\\.+Starting\\s.+ng",
+          "endsPattern": "Application bundle generation complete"
+        }
+      },
+      "options": {
+        "cwd": "${workspaceFolder}/angular"
+      }
+    },
+    {
+      "label": "Run Backend",
+      "type": "shell",
+      "command": "node app.js",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*", // Match any output to indicate the task started
+          "endsPattern": "listening on port 4201" // Detects readiness message
+        },
+        "pattern": {
+          "regexp": "^(.*)$", // A generic pattern to avoid 'kind' requirement
+          "message": 1
+        }
+      },
+      "options": {
+        "cwd": "${workspaceFolder}/server"
+      }
+    },
+    {
+      "label": "Stop Frontend",
+      "type": "npm",
+      "script": "stop",
+      "group": "build",
+      "isBackground": false,
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${workspaceFolder}/angular",
+        "env": {
+    "DEBUG": "true"
+  }
+      }
+    }
+  ]
+}
