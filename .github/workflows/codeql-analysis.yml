@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript', 'typescript', 'actions' ] # Can't remove javascript, this blocks CodeQL checks and no merges possible
+        language: [ 'typescript' ]  # Only TypeScript since you use Angular and TypeScript-based ExpressJS
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
