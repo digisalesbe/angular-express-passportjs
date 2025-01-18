@@ -13,7 +13,7 @@ router.get('/', (req, res)=>{
         }
         return res.json({username: user.username});
     })(req, res)
-})
+});
 
 
 router.post('/login', (req, res)=>{

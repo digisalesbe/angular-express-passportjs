@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { HomeComponent } from './home/home.component';
-import { PageNotFoundComponent } from './home/pagenotfound.component';
-import { AuthGuardService } from './auth.guard';
+
+import { HomeComponent } from '@home/home.component';
+import { PageNotFoundComponent } from '@home/pagenotfound.component';
+import { LoginComponent } from '@auth/login/login.component';
+import { RegisterComponent } from '@auth/register/register.component';
+import { AuthGuardService } from '@auth/auth.guard';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },

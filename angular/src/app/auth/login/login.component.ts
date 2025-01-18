@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../auth.services';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserInterface } from '../../user.interface';
+
+import { environment } from '@environments/environment';
+import { AuthService } from '@services/auth.services';
+import { UserInterface } from '@models/user.interface';
 
 @Component({
   selector: 'app-login',
