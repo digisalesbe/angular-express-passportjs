@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../auth.services';
+
+import { AuthService } from '@services/auth.services';
 
 @Component({
   selector: 'app-home',

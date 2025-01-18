@@ -1,15 +1,22 @@
 # JWT User Authentication Passportjs
-JWT based user authentication using passportjs, passport-local, passport-jwt, mongodb, angular
+JWT based user authentication using passportjs, passport-local, passport-jwt, angular with a choosen database
 
 Be aware this is application comes from an old github repository.
 It needs to be updated, changed and upgraded :
-- to latest version of Angular
-- to latest version of Express
-- upgrade all necessary packages
-- add MySQL and MariaDB integration
-- needs forgot your password
+- ✅ to latest version of Angular
+- ✅ to latest version of Express
+- ✅ upgrade all necessary packages
+- ✅ check vulnerabilities for frontend and backend
+- ⬜ change auth.guard.ts - can't go to main page or /home
+- ⬜ only show "login"- and "register"-link when not logged in
+- ⬜ add MySQL integration
+- ⬜ add MariaDB integration
+- ⬜ easy configuration for chosen database
+- ⬜ needs "forgot your password"-functionality
+- ⬜ needs simple responsive login / register & lost password layouts
 - etc...
 
+Extra help is always welcome ! ( to make this application solid, full of features and documentation )
 
 #### Express Server
 
@@ -34,12 +41,17 @@ In Express app, to server the ui, static file ie. index.html is configured from 
 
 
 #### Setup
-Clone the repo
+Clone the repo locally
 `cd server`
 `npm install`
 `npm run secrets` *Generate the public, private key for JWT*
 `npm start`
 
+Install MongoDB locally
+Community version : https://www.mongodb.com/try/download/community
+
+Configure MongoDB
+Look in the ".env"-file in the "server" folder, use this exact url for your MongoDB configuration
 
 ##### Screenshots
 Home:
@@ -53,9 +65,3 @@ Register:
 
 PageNotFound:
 ![PageNotFound](./screenshot/Page%20Not%20Found.png)
-
-Install MongoDB locally
-Community version : https://www.mongodb.com/try/download/community
-
-Configure MongoDB
-Look in the ".env"-file in the "server" folder, use this exact url for your MongoDB configuration
