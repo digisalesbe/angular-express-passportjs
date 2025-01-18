@@ -1,7 +1,8 @@
-import { HttpEvent, HttpHandler, HttpHandlerFn, HttpInterceptor, HttpInterceptorFn, HttpRequest } from "@angular/common/http";
-import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterState } from "@angular/router";
-import { AuthService } from "./auth.services";
+import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from "@angular/common/http";
+import { Router } from "@angular/router";
 import { inject } from "@angular/core";
+
+import { AuthService } from "@services/auth.services";
 
 // export class AuthInterceptor implements HttpInterceptor{
 
