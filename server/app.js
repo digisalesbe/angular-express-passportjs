@@ -3,7 +3,7 @@ const passport = require('passport');
 const cors = require('cors');
 const path = require('path');
 
-require('dotenv').config()
+require('dotenv').config();
 
 const userRoutes = require('./routes/users');
 
