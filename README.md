@@ -11,10 +11,14 @@ It needs to be updated, changed and upgraded :
 - ⬜ only show "login"- and "register"-link when not logged in
 - ⬜ add MySQL integration
 - ⬜ add MariaDB integration
-- ⬜ only show console logs in debug mode
 - ⬜ easy configuration for chosen database
+- ⬜ if username already exists, redirect to login page with filled in username
 - ⬜ needs "forgot your password"-functionality
+- ⬜ Rate limiting in users.js and app.js
+- ⬜ only show console logs and errors in debug mode
 - ⬜ needs simple responsive login / register & lost password layouts
+- ⬜ If already logged in, can't register nor re-login ( neither with a different user ), also hide these links
+- ⬜ If already logged out, can't logout, also hide this link
 - etc...
 
 Extra help is always welcome ! ( to make this application solid, full of features and documentation )

@@ -15,7 +15,9 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public/dist/browser')));
 
-require('./db/mongoose');
+// Connect to chosen database in .env file
+require('./db/database');
+
 require('./middlewares/passport')(passport);
 app.use(passport.initialize());
 

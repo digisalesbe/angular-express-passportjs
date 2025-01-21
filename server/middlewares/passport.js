@@ -1,11 +1,11 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const UserModel = require('../models/user');
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
 
+const UserModel = require('../models/user');
 const pub_key = fs.readFileSync(path.join(__dirname, '..', 'id_rsa_pub.pem'), 'utf-8');
 
 const jwtStrategyOptions = {
