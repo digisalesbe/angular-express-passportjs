@@ -4,8 +4,8 @@ queries:
   - uses: security-and-quality
 packs:
   # For Angular (TypeScript) and Express.js (JavaScript)
-  - codeql/javascript-queries
-  - codeql/typescript-queries
+  - github/codeql/javascript-queries
+  - github/codeql/typescript-queries
 paths:
   - angular/src  # Adjust this to your Angular source directory
   - server  # Adjust this to your Express.js source directory
