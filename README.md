@@ -11,7 +11,7 @@ It needs to be updated, changed and upgraded :
 - ⬜ only show "login"- and "register"-link when not logged in
 - ⬜ add MySQL integration
 - ⬜ add MariaDB integration
-- ⬜ easy configuration for chosen database
+- ✅ easy configuration for chosen database
 - ⬜ if username already exists, redirect to login page with filled in username
 - ⬜ needs "forgot your password"-functionality
 - ⬜ Rate limiting in users.js and app.js
