@@ -3,14 +3,10 @@ disable-default-queries: false
 queries:
   - uses: security-and-quality
 packs:
-  # For Angular (TypeScript)
-  typescript:
-    - scope/typescript-security-extended
-  # For Express.js (JavaScript)
-  javascript:
-    - scope/javascript-security-extended
+  # For Angular (TypeScript) and Express.js (JavaScript)
+  - codeql/javascript-queries
 paths:
-  - src  # Adjust this to your Angular source directory
+  - angular/src  # Adjust this to your Angular source directory
   - server  # Adjust this to your Express.js source directory
 paths-ignore:
   - '**/node_modules'
