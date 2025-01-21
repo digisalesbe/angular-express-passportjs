@@ -2,5 +2,5 @@ name: "Custom CodeQL Config"
 disable-default-queries: true
 queries:
   - uses: security-and-quality
-  - uses: github/codeql/javascript-queries@v1.1.0
-  - uses: github/codeql/typescript-queries@v1.1.0
+  - uses: github/codeql/javascript-queries
+  - uses: github/codeql/typescript-queries
