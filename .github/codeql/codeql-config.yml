@@ -1,11 +1,9 @@
-name: "Custom CodeQL Config for Angular and Express.js"
-disable-default-queries: false
+name: "Custom CodeQL Config"
+disable-default-queries: true
 queries:
   - uses: security-and-quality
-packs:
-  # For Angular (TypeScript) and Express.js (JavaScript)
-  - github/codeql/javascript-queries
-  - github/codeql/typescript-queries
+  - uses: github/codeql/javascript-queries
+  - uses: github/codeql/typescript-queries
 paths:
   - angular/src  # Adjust this to your Angular source directory
   - server  # Adjust this to your Express.js source directory
