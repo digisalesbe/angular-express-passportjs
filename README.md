@@ -11,6 +11,7 @@ It needs to be updated, changed and upgraded :
 - ⬜ only show "login"- and "register"-link when not logged in
 - ⬜ add MySQL integration
 - ⬜ add MariaDB integration
+- ⬜ only show console logs in debug mode
 - ⬜ easy configuration for chosen database
 - ⬜ needs "forgot your password"-functionality
 - ⬜ needs simple responsive login / register & lost password layouts
