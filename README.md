@@ -9,10 +9,15 @@ It needs to be updated, changed and upgraded :
 - ✅ check vulnerabilities for frontend and backend
 - ⬜ change auth.guard.ts - can't go to main page or /home
 - ⬜ only show "login"- and "register"-link when not logged in
+- ⬜ if already logged in, can't register nor re-login ( neither with a different user ), also hide these links
+- ⬜ if already logged out, can't logout, also hide this link
 - ⬜ add MySQL integration
 - ⬜ add MariaDB integration
-- ⬜ easy configuration for chosen database
+- ✅ easy configuration for chosen database
+- ⬜ if username already exists, redirect to login page with filled in username
 - ⬜ needs "forgot your password"-functionality
+- ⬜ Rate limiting in users.js and app.js
+- ⬜ only show console logs and errors in debug mode
 - ⬜ needs simple responsive login / register & lost password layouts
 - etc...
 
