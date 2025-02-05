@@ -22,6 +22,7 @@ It needs to be updated, changed and upgraded :
 - ⬜ Rate limiting in users.js and app.js
 - ⬜ only show console logs and errors in debug mode
 - ⬜ needs simple responsive login / register & lost password layouts
+- ⬜ codeQL configuration need to be corrected to work in GitHub ( with checks for pull request )
 - etc...
 
 Extra help is always welcome ! ( to make this application solid, full of features and documentation )
