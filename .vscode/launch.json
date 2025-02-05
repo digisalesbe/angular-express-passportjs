@@ -14,12 +14,16 @@
       "name": "Launch Angular",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}/angular",
-      "preLaunchTask": "npm: start"
+      "preLaunchTask": "npm: start",
+      "sourceMaps": true
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Launch Backend",
+      "runtimeExecutable": "nodemon",
+      "args": ["--inspect", "server/app.js"],
+      "restart": true,
       "program": "${workspaceFolder}/server/app.js",
       "cwd": "${workspaceFolder}/server",
       "outFiles": ["${workspaceFolder}/server/**/*.js"],

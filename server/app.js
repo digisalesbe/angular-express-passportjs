@@ -5,7 +5,7 @@ const path = require('path');
 
 require('dotenv').config();
 
-const userRoutes = require('./routes/users');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -21,7 +21,7 @@ require('./db/database');
 require('./middlewares/passport')(passport);
 app.use(passport.initialize());
 
-app.use('/users', userRoutes);
+app.use('/auth', authRoutes);
 
 app.use('*', (req, res)=>{
     res.sendFile(path.resolve(__dirname, 'public/dist/browser/index.html'));

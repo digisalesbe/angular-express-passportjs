@@ -1,26 +1,11 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-
-import { AuthService } from '@services/auth.services';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
-  imports: [RouterModule],
-  templateUrl: './home.component.html'
+  imports: [],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  username: string = ''
-
-  constructor(private authService: AuthService, private router: Router){
-    this.authService.$currentUser.subscribe((val)=>{
-      if(val) this.username = val;
-    })
-  }
-
-  logout(){
-    this.authService.removeToken();
-    this.router.navigateByUrl('/login');
-  }
 
 }
