@@ -1,0 +1,19 @@
+<div class="container">
+  <div *ngIf="isLoggedIn; else guestContent">
+    <h1>Welcome {{ getName() }}</h1>
+    <nav>
+      <a routerLink="/dashboard">Dashboard</a> |
+      <a routerLink="/profile">Profile</a> |
+      <a routerLink="/login" (click)="logout()">Logout</a>
+    </nav>
+  </div>
+
+  <ng-template #guestContent>
+    <h1>Welcome Guest</h1>
+    <nav>
+      <a routerLink="/login">Login</a> |
+      <a routerLink="/register">Register</a> |
+      <a routerLink="/about">About</a>
+    </nav>
+  </ng-template>
+</div>

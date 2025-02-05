@@ -25,7 +25,17 @@ router.post('/login', (req, res)=>{
         }
         req.login(user, {session: false}, (err)=>{
             if(err) return res.send(err);
-            const token = jwt.sign({sub: user._id}, priv_key, { expiresIn: "1d", algorithm: 'RS256' });
+            const token = jwt.sign(
+                {
+                    sub: user._id,
+                    name: user.name,
+                    status: user.status
+                },
+                priv_key,
+                {
+                    expiresIn: "1d",
+                    algorithm: 'RS256'
+                });
             return res.json({username: user.username, token});
         })
     })(req, res);
@@ -34,11 +44,23 @@ router.post('/login', (req, res)=>{
 router.post('/signup', (req, res)=>{
     passport.authenticate('localSignup', {session: false}, (err, user, info)=>{
         if(err || !user){
+            console.log(err);
             return res.status(401).send(info);
         }
         req.login(user, {session: false}, (err)=>{
             if(err) return res.send(err);
-            const token = jwt.sign({sub: user._id}, priv_key, { expiresIn: "1d", algorithm: 'RS256' });
+            // Add extra fields like name and status to the token
+            const token = jwt.sign(
+                {
+                    sub: user._id,
+                    name: user.name,
+                    status: user.status
+                },
+                priv_key,
+                {
+                    expiresIn: "1d",
+                    algorithm: 'RS256'
+                });
             return res.json({username: user.username, token});
         })
     })(req, res);
