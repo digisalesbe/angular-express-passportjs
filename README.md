@@ -1,16 +1,19 @@
 # JWT User Authentication Passportjs
 JWT based user authentication using passportjs, passport-local, passport-jwt, angular with a choosen database
 
-Be aware this is application comes from an old github repository.
+Be aware this is application comes from an old githu
+b repository.
 It needs to be updated, changed and upgraded :
 - ✅ to latest version of Angular
 - ✅ to latest version of Express
 - ✅ upgrade all necessary packages
 - ✅ check vulnerabilities for frontend and backend
 - ⬜ change auth.guard.ts - can't go to main page or /home
-- ⬜ only show "login"- and "register"-link when not logged in
+- ✅ only show "login"- and "register"-link when not logged in
 - ⬜ if already logged in, can't register nor re-login ( neither with a different user ), also hide these links
-- ⬜ if already logged out, can't logout, also hide this link
+- ✅ if already logged out, can't logout, also hide this link
+- ✅ add header, footer and sidebar pages
+- ✅ add members/dashboard, members/profile and about pages
 - ⬜ add MySQL integration
 - ⬜ add MariaDB integration
 - ✅ easy configuration for chosen database
@@ -19,17 +22,18 @@ It needs to be updated, changed and upgraded :
 - ⬜ Rate limiting in users.js and app.js
 - ⬜ only show console logs and errors in debug mode
 - ⬜ needs simple responsive login / register & lost password layouts
+- ⬜ codeQL configuration need to be corrected to work in GitHub ( with checks for pull request )
 - etc...
 
 Extra help is always welcome ! ( to make this application solid, full of features and documentation )
 
 #### Express Server
 
-- /users/login - passport-local strategy parse the login form and check the exist of user in mongodb,  then the login middleware sign the user as jwt and send the token
+- /auth/login - passport-local strategy parse the login form and check the exist of user in mongodb,  then the login middleware sign the user as jwt and send the token
 
-- /users/signup - passport-local strategy parse the signup form and add the user in the db, then the signup middleware sign the user as jwt and send the token.
+- /auth/signup - passport-local strategy parse the signup form and add the user in the db, then the signup middleware sign the user as jwt and send the token.
 
-- /users - protected by passport-jwt strategy, which parse the jwt token from header
+- /auth - protected by passport-jwt strategy, which parse the jwt token from header
 
 
 #### Angular App

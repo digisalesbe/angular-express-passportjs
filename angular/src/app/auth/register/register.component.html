@@ -1,6 +1,10 @@
 <h1>Register</h1>
 <p *ngIf="errorMessage">{{ errorMessage }}</p>
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <label for="name">Name</label>
+    <div>
+        <input type="text" id="name" name="name" formControlName="name">
+    </div>
     <label for="username">Username</label>
     <div>
         <input type="text" id="username" name="username" formControlName="username">

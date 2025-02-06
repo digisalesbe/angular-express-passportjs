@@ -1,6 +1,6 @@
 {
   "name": "jwt-user-authentication-passportjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "JWT based user authentication using passportjs, passport-jwt, mongodb, angular",
   "main": "app.js",
   "scripts": {
@@ -32,5 +32,8 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -15,33 +15,46 @@ import { UserInterface } from '@models/user.interface';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
-  loginForm
-  errorMessage = null;
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup = new FormGroup({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
+  errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, 
+  constructor(
     private http: HttpClient, 
     private authService: AuthService,
     private router: Router
-  ){
-    this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]]
-    })
-  }
+  ){}
 
+  ngOnInit(): void {
+    // Ensure form is initialized properly
+    console.log("Form Initialized", this.loginForm.value);
+  }
+  
   onSubmit(): void {
+    if (this.loginForm.invalid) {
+      this.errorMessage = "Please fill in all required fields.";
+      return;
+    }
+
     const baseUrl = environment.apiUrl;
-    this.http.post<UserInterface>(`${baseUrl}/users/login`, {
-      username: this.loginForm.value.username,
-      password: this.loginForm.value.password
-    })
+
+    this.http.post<UserInterface>(`${baseUrl}/auth/login`, this.loginForm.value)
     .subscribe({
       next: (response)=>{
         const token = response.token;
         this.authService.setToken(token);
-        this.authService.$currentUser.next(response.username);
-        this.router.navigateByUrl('/');
+
+        // Set the full user data in the AuthService
+        const user = {
+          username: response.username,
+          token: token
+        };
+        this.authService.setCurrentUser(user);
+
+        this.router.navigateByUrl('/dashboard');
       },
       error: (err)=>{
         this.errorMessage = err.error.message;

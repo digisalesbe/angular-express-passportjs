@@ -11,14 +11,15 @@ export const AuthGuardService: CanActivateFn = (route: ActivatedRouteSnapshot, s
     const http = inject(HttpClient);
 
     if(!authService.getLoggedIn()){
-        router.navigateByUrl('/login');
-    }else{
+        router.navigateByUrl('/home');
+    }
+    else {
         const baseUrl = environment.apiUrl;
-        http.get<{username: string}>(`${baseUrl}/users`)
+        http.get<{username: string}>(`${baseUrl}/auth`)
         .subscribe({
             next: (response)=>{
                 const username = response.username;
-                authService.$currentUser.next(username);
+                //authService.currentUser$.next(username);
             },
             error: (err)=>{
                 console.log(err);
