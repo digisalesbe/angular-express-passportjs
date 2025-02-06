@@ -1,6 +1,6 @@
 {
   "name": "jwt-user-authentication-passportjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "JWT based user authentication using passportjs, passport-jwt, mongodb, angular",
   "main": "app.js",
   "scripts": {
