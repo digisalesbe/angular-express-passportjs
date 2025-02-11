@@ -81,7 +81,7 @@ const localLoginStrategy = new LocalStrategy(localStrategyOptions, async (req,us
         const isValid = await bcrypt.compare(password, user.password);
         if(!isValid) return done(null, false, {message: "Username or password incorrect !"});
         
-        user = user.toObject()
+        user = user.toObject();
         delete user.password;
         
         return done(null, user);
@@ -126,7 +126,7 @@ const localSignupStrategy = new LocalStrategy(localStrategyOptions, async (req, 
             return done(null, user);
         }
         else{
-            return done(null, false, {message: 'Username already exists !'})
+            return done(null, false, {message: 'Username already exists !'});
         }        
     }
     catch(err){
