@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
+import { Router } from '@angular/router';
 
 import { UserInterface } from '@models/user.interface';
 
@@ -10,7 +11,7 @@ export class AuthService {
     private loggedIn = false;
     public currentUser$ = new BehaviorSubject<UserInterface | null>(null);
 
-    constructor() {
+    constructor( private router: Router ) {
         this.loggedIn = Boolean(this.getToken())
     }
 
@@ -59,4 +60,8 @@ export class AuthService {
         console.log('Logged Out!');
     }
 
+    logout(){
+        this.removeToken();
+        this.router.navigate(['/']);
+      }
 }

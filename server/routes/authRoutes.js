@@ -11,7 +11,7 @@ router.get('/', (req, res)=>{
         if(err || !user){
             return res.status(401).send(info);
         }
-        return res.json({username: user.username});
+        return res.json({username: user.username, token: user.token});
     })(req, res)
 });
 
