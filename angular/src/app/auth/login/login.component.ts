@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { environment } from '@environments/environment';
@@ -21,14 +21,23 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', Validators.required)
     });
   errorMessage: string = '';
+  loading: boolean = false;
 
   constructor(
     private http: HttpClient, 
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ){}
 
   ngOnInit(): void {
+    // Check for username in URL parameters
+    this.route.queryParams.subscribe(params => {
+      if (params['username']) {
+        this.loginForm.patchValue({ username: params['username'] });
+        this.errorMessage  = 'This username already exists. Please log in.';
+      }
+    });
     // Ensure form is initialized properly
     console.log("Form Initialized", this.loginForm.value);
   }
@@ -39,25 +48,34 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     const baseUrl = environment.apiUrl;
 
     this.http.post<UserInterface>(`${baseUrl}/auth/login`, this.loginForm.value)
     .subscribe({
       next: (response)=>{
-        const token = response.token;
-        this.authService.setToken(token);
+        this.loading = false;
+          
+        if (response.username && response.token) {
+          // Login successful
+          const token = response.token;
+          this.authService.setToken(token);
+          
+          // Set the full user data in the AuthService
+          const user: UserInterface = {
+            username: response.username,
+            token: token
+          };
+          this.authService.setCurrentUser(user);
 
-        // Set the full user data in the AuthService
-        const user = {
-          username: response.username,
-          token: token
-        };
-        this.authService.setCurrentUser(user);
-
-        this.router.navigateByUrl('/dashboard');
+          this.router.navigateByUrl('/dashboard');
+        } else {
+          // Handle unexpected response format
+          this.errorMessage = 'Invalid server response';
+        }
       },
       error: (err)=>{
-        this.errorMessage = err.error.message;
+        this.errorMessage = err.error?.message || 'Login failed';
       }
     })
   }

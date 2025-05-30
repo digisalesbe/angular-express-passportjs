@@ -126,7 +126,10 @@ const localSignupStrategy = new LocalStrategy(localStrategyOptions, async (req, 
             return done(null, user);
         }
         else{
-            return done(null, false, {message: 'Username already exists !'});
+            // Redirect to the login page with the username filled
+            // Make sure username is properly encoded
+            const encodedUsername = encodeURIComponent(username);
+            return done(null, false, { message: 'User already exists', redirect: `/login?username=${encodedUsername}`});
         }        
     }
     catch(err){
