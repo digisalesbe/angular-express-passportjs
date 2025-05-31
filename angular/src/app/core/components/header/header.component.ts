@@ -11,13 +11,14 @@ import { UserInterface } from '@models/user.interface';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   loggedIn: boolean = false;
 
   constructor( private authService: AuthService ) {}
- 
-  ngOnInit(): void {
-    this.loggedIn = this.authService.getLoggedIn();
+
+  // Need to check each time header component is called
+  ngDoCheck(): void {
+    this.loggedIn = this.authService.isLoggedIn();
   }
 
   getName(): string | null {
