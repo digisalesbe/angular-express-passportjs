@@ -5,6 +5,7 @@ const path = require('path');
 
 require('dotenv').config();
 
+
 const authRoutes = require('./routes/authRoutes');
 
 const app = express();
@@ -23,9 +24,10 @@ app.use(passport.initialize());
 
 app.use('/auth', authRoutes);
 
-app.use('*', (req, res)=>{
-    res.sendFile(path.resolve(__dirname, 'public/dist/browser/index.html'));
+app.all('/*routing', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public/dist/browser/index.html'));
 });
+
 
 app.listen(4201, ()=>{
     console.log('listening on port 4201');
