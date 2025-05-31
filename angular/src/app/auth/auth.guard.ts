@@ -1,9 +1,11 @@
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject } from "rxjs";
 
 import { AuthService } from "@services/auth.services";
 import { environment } from "@environments/environment";
+import { UserInterface } from '@models/user.interface';
 
 export const AuthGuardService: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const router = inject(Router);
@@ -15,17 +17,21 @@ export const AuthGuardService: CanActivateFn = (route: ActivatedRouteSnapshot, s
     }
     else {
         const baseUrl = environment.apiUrl;
-        http.get<{username: string}>(`${baseUrl}/auth`)
+        http.get<{username: string, token: string}>(`${baseUrl}/auth`)
         .subscribe({
             next: (response)=>{
-                const username = response.username;
-                //authService.currentUser$.next(username);
+                // Set the full user data in the AuthService
+                const user = {
+                    username: response.username,
+                    token: response.token
+                };
+                authService.setCurrentUser(user);
             },
             error: (err)=>{
                 console.log(err);
                 console.log(err.error.message);
             }
-        })
+        });
     }
-    return true
+    return true;
 }

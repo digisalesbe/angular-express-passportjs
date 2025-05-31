@@ -6,72 +6,97 @@ const path = require('path');
 
 const priv_key = fs.readFileSync(path.join(__dirname, '..', 'id_rsa_priv.pem'));
 
-router.get('/', (req, res)=>{
-    passport.authenticate('jwt', {session: false}, (err, user, info)=>{
-        if(err || !user){
-            return res.status(401).send(info);
+// Check authentication when revisiting website
+const handleGetUser = (req, res) => {
+  res.json({
+    username: req.user.username,
+    token: req.user.token,
+  });
+};
+
+router.get('/', passport.authenticate('jwt', { session: false }), handleGetUser);
+
+// Handling the routing of login : log in and verify the given information
+const customLoginHandler = (req, res, next) => {
+  passport.authenticate('localLogin', { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.status(401).send(info || { message: 'Login failed' });
+    }
+
+    req.login(user, { session: false }, (err) => {
+      if (err) return next(err);
+
+      const token = jwt.sign(
+        {
+          sub: user._id,
+          name: user.name,
+          status: user.status,
+        },
+        priv_key,
+        {
+          expiresIn: '1d',
+          algorithm: 'RS256',
         }
-        return res.json({username: user.username});
-    })(req, res)
-});
+      );
 
+      return res.json({ username: user.username, token });
+    });
+  })(req, res, next);
+};
 
-router.post('/login', (req, res)=>{
-    //Note: no need of passport authenticate middleware, instead of fetch the user from db and send the signed user as a token
-    passport.authenticate('localLogin', {session: false}, (err, user, info)=>{
-        if(err || !user){
-            console.log(err);
-            return res.status(401).send(info);
+router.post('/login', customLoginHandler);
+
+// Handling the routing of signup : check if user exists already and verify the given information
+const handleSignup = (req, res, next) => {
+  passport.authenticate('localSignup', { session: false }, (err, user, info) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+
+    if (!user) {
+      if (info && info.redirect) {
+        return res.status(409).json({
+          message: 'User already exists',
+          redirect: true,
+          url: info.redirect,
+        });
+      } else {
+        return res.status(401).json({ message: info?.message || 'Authentication failed' });
+      }
+    }
+
+    req.login(user, { session: false }, (loginErr) => {
+      if (loginErr) return next(loginErr); // Use next() for error propagation
+
+      const token = jwt.sign(
+        {
+          sub: user._id,
+          name: user.name,
+          status: user.status,
+        },
+        priv_key,
+        {
+          expiresIn: '1d',
+          algorithm: 'RS256',
         }
-        req.login(user, {session: false}, (err)=>{
-            if(err) return res.send(err);
-            const token = jwt.sign(
-                {
-                    sub: user._id,
-                    name: user.name,
-                    status: user.status
-                },
-                priv_key,
-                {
-                    expiresIn: "1d",
-                    algorithm: 'RS256'
-                });
-            return res.json({username: user.username, token});
-        })
-    })(req, res);
-});
+      );
 
-router.post('/signup', (req, res)=>{
-    passport.authenticate('localSignup', {session: false}, (err, user, info)=>{
-        if(err || !user){
-            console.log(err);
-            return res.status(401).send(info);
-        }
-        req.login(user, {session: false}, (err)=>{
-            if(err) return res.send(err);
-            // Add extra fields like name and status to the token
-            const token = jwt.sign(
-                {
-                    sub: user._id,
-                    name: user.name,
-                    status: user.status
-                },
-                priv_key,
-                {
-                    expiresIn: "1d",
-                    algorithm: 'RS256'
-                });
-            return res.json({username: user.username, token});
-        })
-    })(req, res);
-});
+      return res.json({ username: user.username, token });
+    });
+  })(req, res, next);
+};
 
-router.delete('/logout', (req, res)=>{
-    req.logout({session: false}, (err)=>{
-        if(err) return res.status(500).send(err);
-        return res.status(200).send('loggedout');
-    })
-});
+router.post('/signup', handleSignup);
+
+// Handle the routing of logout
+const handleLogout = (req, res, next) => {
+  req.logout({ session: false }, (err) => {
+    if (err) return next(err);
+    return res.status(200).send('logged out');
+  });
+};
+
+router.delete('/logout', handleLogout);
 
 module.exports = router;
-

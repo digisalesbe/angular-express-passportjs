@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="isLoggedIn; else guestContent">
+  <div *ngIf="loggedIn; else guestContent">
     <h1>Welcome {{ getName() }}</h1>
     <nav>
       <a routerLink="/dashboard">Dashboard</a> |
@@ -9,7 +9,7 @@
   </div>
 
   <ng-template #guestContent>
-    <h1>Welcome Guest</h1>
+    <h1>Welcome Visitor</h1>
     <nav>
       <a routerLink="/login">Login</a> |
       <a routerLink="/register">Register</a> |
