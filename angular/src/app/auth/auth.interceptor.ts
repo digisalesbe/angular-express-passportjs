@@ -19,21 +19,20 @@ export const AuthInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
     const router = inject(Router);
     const authService = inject(AuthService);
 
-
     const token = authService.getToken();
-    if(!token){
+    if (token === null || token === undefined) {
         const currentUrl = router.routerState.snapshot.url;
         if(['/login', '/register'].includes(currentUrl)){
             router.navigateByUrl(currentUrl);
         }else{
             router.navigateByUrl('/login');
         }
+    } else {
+       req = req.clone({
+            setHeaders: {
+                Authorization: `Bearer ${token}`
+            }
+        });
     }
-    req = req.clone({
-        setHeaders: {
-            Authorization: `Bearer ${token}`
-        }
-    })
-
     return next(req);
 }

@@ -1,6 +1,6 @@
 {
   "name": "jwt-user-authentication-passportjs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "JWT based user authentication using passportjs, passport-jwt, mongodb, angular",
   "main": "app.js",
   "scripts": {
@@ -22,18 +22,19 @@
     "bcrypt": "^5.1.1",
     "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
     "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
-    "mariadb": "^3.4.0",
-    "mongoose": "^8.10.0",
-    "mysql2": "^3.12.0",
+    "mariadb": "^3.4.2",
+    "mongoose": "^8.15.0",
+    "mysql2": "^3.14.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.10"
   }
 }

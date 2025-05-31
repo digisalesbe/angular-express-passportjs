@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
+import { Router } from '@angular/router';
 
 import { UserInterface } from '@models/user.interface';
 
@@ -10,14 +11,15 @@ export class AuthService {
     private loggedIn = false;
     public currentUser$ = new BehaviorSubject<UserInterface | null>(null);
 
-    constructor() {
-        this.loggedIn = Boolean(this.getToken())
+    constructor( private router: Router ) {
+        this.loggedIn = this.isLoggedIn();
     }
 
-    public getLoggedIn(){
+    getLoggedIn(): boolean | false {
         return this.loggedIn;
     }
 
+    // Get the username
     getUserName(): string | null {
         const currentUser = this.currentUser$.getValue();
         const username = currentUser ? currentUser.username : null;
@@ -37,26 +39,52 @@ export class AuthService {
         const payload = currentUser && currentUser.token ? JSON.parse( atob( currentUser.token.split('.')[1] ) ) : null;
         return payload.status;
     }
+
     // Set the current user
     setCurrentUser(user: UserInterface): void {
         this.currentUser$.next(user);
      }
 
-    public getToken() {
+     // Get the token
+    getToken(): string | null {
         return localStorage.getItem('token');
     }
 
+    // Set the token & loggedIn
     public setToken(token: string){
-        console.log('logged in');
         this.loggedIn = true;
-        return localStorage.setItem('token', token);
+        localStorage.setItem('token', token);
+        console.log('Logged in');
     }
 
+    // Remove the token
     public removeToken(){
-        let val = localStorage.removeItem('token');
-        console.log('removed token val ', val);
+        localStorage.removeItem('token');
         this.loggedIn = false;
+    }
+
+    isTokenExpired(token: string): boolean {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const now = Math.floor(Date.now() / 1000);
+        return payload.exp < now;
+    }
+
+    isLoggedIn(): boolean {
+        const token = this.getToken();
+        return token != null && !this.isTokenExpired(token);
+    }
+
+    checkTokenValidity(): void {
+        const token = this.getToken();
+        if (!token || this.isTokenExpired(token)) {
+            this.logout();
+        }
+    }
+
+    // Log out of the user account
+    logout(){
+        this.removeToken();
+        this.router.navigate(['/']);
         console.log('Logged Out!');
     }
-
 }
