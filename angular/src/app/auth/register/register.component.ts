@@ -32,6 +32,10 @@ export class RegisterComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    // Check if you are still logged in
+    if ( this.authService.isLoggedIn() ) {
+      this.router.navigateByUrl('/dashboard');
+    }
     // Ensure form is initialized properly
     console.log("Form Initialized", this.registerForm.value);
   }

@@ -12,14 +12,12 @@ import { UserInterface } from '@models/user.interface';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn: boolean = false;
+  loggedIn: boolean = false;
 
   constructor( private authService: AuthService ) {}
  
   ngOnInit(): void {
-    this.authService.currentUser$.subscribe((user: UserInterface | null) => {
-      this.isLoggedIn = !!user;
-    });
+    this.loggedIn = this.authService.getLoggedIn();
   }
 
   getName(): string | null {
@@ -28,7 +26,7 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
-    this.isLoggedIn = false;
+    this.loggedIn = false;
   }
 
 }

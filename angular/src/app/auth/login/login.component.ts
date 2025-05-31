@@ -31,13 +31,18 @@ export class LoginComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    // Check for username in URL parameters
-    this.route.queryParams.subscribe(params => {
-      if (params['username']) {
-        this.loginForm.patchValue({ username: params['username'] });
-        this.errorMessage  = 'This username already exists. Please log in.';
-      }
-    });
+    // Check if you are still logged in
+    if ( this.authService.isLoggedIn() ) {
+      this.router.navigateByUrl('/dashboard');
+    } else {
+      // Check for username in URL parameters
+      this.route.queryParams.subscribe(params => {
+        if (params['username']) {
+          this.loginForm.patchValue({ username: params['username'] });
+          this.errorMessage  = 'This username already exists. Please log in.';
+        }
+      });
+    }
     // Ensure form is initialized properly
     console.log("Form Initialized", this.loginForm.value);
   }

@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="isLoggedIn; else guestContent">
+  <div *ngIf="loggedIn; else guestContent">
     <h1>Welcome {{ getName() }}</h1>
     <nav>
       <a routerLink="/dashboard">Dashboard</a> |
