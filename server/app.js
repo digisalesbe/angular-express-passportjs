@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const cors = require('cors');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
 
 require('dotenv').config();
 
@@ -24,7 +25,16 @@ app.use(passport.initialize());
 
 app.use('/auth', authRoutes);
 
-app.all('/*routing', (req, res) => {
+// Allow max 100 requests per IP per 15 minutes
+const ExpressJSAppLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.all('/*routing', ExpressJSAppLimiter, (req, res) => {
   res.sendFile(path.resolve(__dirname, 'public/dist/browser/index.html'));
 });
 

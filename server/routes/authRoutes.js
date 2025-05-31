@@ -10,7 +10,7 @@ const priv_key = fs.readFileSync(path.join(__dirname, '..', 'id_rsa_priv.pem'));
 // Function rate limiting for customLoginHandler and customSignupHandler
 const rateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // Limit each IP to 10 requests per windowMs
+  max: 5, // Limit each IP to 10 requests per windowMs
   message: { message: 'Too many attempts from this IP, please try again later.' },
 });
 
