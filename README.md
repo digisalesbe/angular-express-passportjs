@@ -19,7 +19,7 @@ It needs to be updated, changed and upgraded :
 - ✅ easy configuration for chosen database
 - ✅ if username already exists, redirect to login page with filled in username
 - ⬜ needs "forgot your password"-functionality
-- ⬜ Rate limiting in users.js and app.js
+- ✅ Rate limiting in ExpressJs for login and signup
 - ⬜ only show console logs and errors in debug mode
 - ⬜ needs simple responsive login / register & lost password layouts
 - ⬜ codeQL configuration need to be corrected to work in GitHub ( with checks for pull request )
