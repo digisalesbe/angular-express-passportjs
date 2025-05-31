@@ -3,8 +3,16 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
 
 const priv_key = fs.readFileSync(path.join(__dirname, '..', 'id_rsa_priv.pem'));
+
+// Function rate limiting for customLoginHandler and customSignupHandler
+const rateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // Limit each IP to 10 requests per windowMs
+  message: { message: 'Too many attempts from this IP, please try again later.' },
+});
 
 // Check authentication when revisiting website
 const handleGetUser = (req, res) => {
@@ -44,10 +52,10 @@ const customLoginHandler = (req, res, next) => {
   })(req, res, next);
 };
 
-router.post('/login', customLoginHandler);
+router.post('/login', rateLimiter, customLoginHandler);
 
 // Handling the routing of signup : check if user exists already and verify the given information
-const handleSignup = (req, res, next) => {
+const customSignupHandler = (req, res, next) => {
   passport.authenticate('localSignup', { session: false }, (err, user, info) => {
     if (err) {
       console.error(err);
@@ -87,7 +95,7 @@ const handleSignup = (req, res, next) => {
   })(req, res, next);
 };
 
-router.post('/signup', handleSignup);
+router.post('/signup', rateLimiter, customSignupHandler);
 
 // Handle the routing of logout
 const handleLogout = (req, res, next) => {
