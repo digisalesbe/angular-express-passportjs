@@ -1,5 +1,5 @@
 <h1>Register</h1>
-<p *ngIf="errorMessage">{{ errorMessage }}</p>
+<p *ngIf="errorMessage" [innerHTML]="errorMessage"></p>
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <label for="name">Name</label>
     <div>

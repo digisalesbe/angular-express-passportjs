@@ -47,9 +47,8 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    const baseUrl = environment.apiUrl;
 
-    this.http.post<ApiResponseInterface>(`${baseUrl}/auth/signup`, this.registerForm.value)
+    this.http.post<ApiResponseInterface>(`${environment.apiUrl}/auth/signup`, this.registerForm.value)
     .subscribe({
       next: (response)=>{
         this.loading = false;
@@ -60,24 +59,7 @@ export class RegisterComponent implements OnInit {
           return;
         }
 
-        // Make sure username and token exist before proceeding
-        if (response.username && response.token) {
-          // Normal successful registration flow
-          const token = response.token;
-          this.authService.setToken(token);
-
-          // Set the full user data in the AuthService
-          const user: UserInterface = {
-            username: response.username,
-            token: token
-          };
-          this.authService.setCurrentUser(user);
-            
-          this.router.navigateByUrl('/dashboard');
-        } else {
-          // Handle unexpected response format
-          this.errorMessage = 'Invalid server response';
-        }
+        this.errorMessage = response.message;
       },
       error: (err) => {
         this.loading = false;
