@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const escapeHtml = require('escape-html');
+const validator = require('validator');
 
 const UserModel = require('../models/user');
 const pub_key = fs.readFileSync(path.join(__dirname, '..', 'id_rsa_pub.pem'), 'utf-8');
@@ -25,18 +26,8 @@ const localStrategyOptions = {
 const validateInput = (username, password, name, isSignup = true) => {
     const errors = [];
 
-    if (isSignup && !name) {
-        errors.push('Name is required');
-    }
-
-    if (!username) {
-        errors.push('Username is required');
-    } else {
-        const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-        const usernameToTest = String(username).trim(); // Ensure it's a string and remove spaces
-        if (!usernameRegex.test(usernameToTest)) {
-            errors.push('Username must be 3-20 characters long and can only contain letters, numbers, and underscores');
-        }
+    if (!username || !validator.isEmail(username, { allow_utf8_local_part: true, require_tld: true })) {
+        errors.push('Username is required and username needs to be a valid email address');
     }
 
     if (!password) {
@@ -45,10 +36,14 @@ const validateInput = (username, password, name, isSignup = true) => {
         if (password.length < 8) {
             errors.push('Password must be at least 8 characters long');
         }
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@#$!%*?&]{8,}$/;
         if (!passwordRegex.test(password)) {
             errors.push('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character');
         }
+    }
+
+    if (isSignup && (!name || !/^[\p{L}\p{M}\p{N} .'-]+$/u.test(name.trim()))) {
+        errors.push('Name is required and can contain only letters, numbers, or basic punctuation');
     }
 
     return errors.length > 0 ? errors : null;
@@ -79,6 +74,12 @@ const verifyLocalLogin = async (req, username, password, done) => {
     username = escapeHtml(username.trim().toLowerCase());
     password = escapeHtml(password);
 
+    // Validate input fields of the form
+    const errors = validateInput(username, password, null, false);
+    if (errors) {
+      return done(null, false, { message: errors.join(', ') });
+    }
+
     let user = await UserModel.findOne({ username });
     if (!user) {
       return done(null, false, { message: "Username or password incorrect !" });
@@ -89,6 +90,14 @@ const verifyLocalLogin = async (req, username, password, done) => {
       return done(null, false, { message: "Username or password incorrect !" });
     }
 
+     // Check if account is confirmed
+    if (user.status === 0) {
+      return done(null, false, {
+        message: "Please confirm your email address before logging in.<br>Check your inbox for the confirmation link.",
+      });
+    }
+
+    // Keep user information without password
     user = user.toObject();
     delete user.password;
 
@@ -104,10 +113,6 @@ const localLoginStrategy = new LocalStrategy(localStrategyOptions, verifyLocalLo
 const verifyLocalSignup = async (req, username, password, done) => {
   try {
     let { name } = req.body; // Extract name from req.body
-
-    if (!name) {
-      return done(null, false, { message: 'Name is required' });
-    }
 
     // Validate input fields of the form
     const errors = validateInput(username, password, name);
