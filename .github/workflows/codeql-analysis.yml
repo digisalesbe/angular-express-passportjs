@@ -19,8 +19,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript', 'typescript' ]
-        config: [ 'recommended' ]
+#        language: [ 'javascript', 'typescript' ]
+        language: [ 'typescript' ]
+#        config: [ 'recommended' ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
