@@ -140,7 +140,8 @@ const customConfirmationHandler = async (req, res, next) => {
       appUrl: process.env.FRONTEND_URL,
     });
 
-    return res.redirect(`${process.env.FRONTEND_URL}/confirm/`);
+    return res.status(200).send('Confirmation received');
+    //return res.redirect(`${process.env.FRONTEND_URL}/confirm/`);
   } catch (confirmationError) {
     console.error('Confirmation failed:', confirmationError);
     return res.status(400).send('Invalid or expired token');
