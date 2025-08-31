@@ -54,9 +54,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    const baseUrl = environment.apiUrl;
 
-    this.http.post<UserInterface>(`${baseUrl}/auth/login`, this.loginForm.value)
+    this.http.post<UserInterface>(`${environment.apiUrl}/auth/login`, this.loginForm.value)
     .subscribe({
       next: (response)=>{
         this.loading = false;

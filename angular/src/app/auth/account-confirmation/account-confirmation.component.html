@@ -1,0 +1,5 @@
+<div class="confirmation-container">
+  <h2 *ngIf="!loading">{{ success ? 'Success!' : 'Error' }}</h2>
+  <p *ngIf="!loading">{{ message }}</p>
+  <button *ngIf="!loading && success" (click)="goToLogin()">Go to Login</button>
+</div>

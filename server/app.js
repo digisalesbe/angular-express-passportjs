@@ -23,7 +23,7 @@ require('./db/database');
 require('./middlewares/passport')(passport);
 app.use(passport.initialize());
 
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 // Allow max 100 requests per IP per 15 minutes
 const ExpressJSAppLimiter = rateLimit({
@@ -37,7 +37,6 @@ const ExpressJSAppLimiter = rateLimit({
 app.all('/*routing', ExpressJSAppLimiter, (req, res) => {
   res.sendFile(path.resolve(__dirname, 'public/dist/browser/index.html'));
 });
-
 
 app.listen(4201, ()=>{
     console.log('listening on port 4201');
