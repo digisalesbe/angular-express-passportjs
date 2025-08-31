@@ -3,3 +3,4 @@ angular/node_modules
 server/*.pem
 server/public/dist/
 angular/realign.develop.with.main.after.merging.develop.into.main.sh
+server/.env

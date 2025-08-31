@@ -17,6 +17,7 @@ It needs to be updated, changed and upgraded :
 - ⬜ add MySQL integration
 - ⬜ add MariaDB integration
 - ✅ easy configuration for chosen database
+- ✅ send an email for confirmation of signup
 - ✅ if username already exists, redirect to login page with filled in username
 - ⬜ needs "forgot your password"-functionality
 - ✅ Rate limiting in ExpressJs for login and signup

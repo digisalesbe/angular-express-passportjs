@@ -14,8 +14,7 @@ export const AuthGuardService: CanActivateFn = (route: ActivatedRouteSnapshot, s
         router.navigateByUrl('/home');
     }
     else {
-        const baseUrl = environment.apiUrl;
-        http.get<{username: string, token: string}>(`${baseUrl}/auth`)
+        http.get<{username: string, token: string}>(`${environment.apiUrl}/auth`)
         .subscribe({
             next: (response)=>{
                 // Set the full user data in the AuthService
