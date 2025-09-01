@@ -58,10 +58,13 @@ Clone the repo locally
 `npm start`
 
 Install MongoDB locally
-Community version : https://www.mongodb.com/try/download/community
+=> Community version : https://www.mongodb.com/try/download/community
 
 Configure MongoDB
-Look in the ".env"-file in the "server" folder, use this exact url for your MongoDB configuration
+=> Look in the ".env"-file in the "server"-folder, use this exact url for your MongoDB configuration
+
+Create the ".env"-file in the "server"-folder by saving it from the one of the 2 existing environments
+=> Add your smtp mail information in the MAIL_xxx variables
 
 ##### Screenshots
 Home:
