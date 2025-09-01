@@ -30,7 +30,7 @@
     "mariadb": "^3.4.5",
     "mongoose": "^8.18.0",
     "mysql2": "^3.14.3",
-    "nodemailer": "^7.0.3",
+    "nodemailer": "^7.0.6",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
