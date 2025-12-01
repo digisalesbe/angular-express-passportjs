@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 
 import { environment } from '@environments/environment';
 import { AuthService } from '@services/auth.services';
-import { UserInterface } from '@models/user.interface';
 import { ApiResponseInterface } from '@models/apiresponse.interface';
 
 @Component({
