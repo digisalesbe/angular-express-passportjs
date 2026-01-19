@@ -28,7 +28,7 @@
     "express-session": "^1.18.2",
     "jsonwebtoken": "^9.0.3",
     "mariadb": "^3.4.5",
-    "mongoose": "^9.1.1",
+    "mongoose": "^9.1.4",
     "mysql2": "^3.16.0",
     "nodemailer": "^7.0.12",
     "passport": "^0.7.0",
